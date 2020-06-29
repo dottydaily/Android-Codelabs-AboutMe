@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AboutMe</string>
+    <string name="name_text">Pornpat Santibuppakul</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="bio">Hi, my name is Pornpat.
+    \n\nI am Thai. Live in Pathum Thani, Thailand.
+    \n\nI like coding and anything that relate to the computer.
+    \nI choose to practice in Android application development because I had interested in Android for a long time.
+    \n\nThe first Android phone I had used is <b>"Sony Ericsson - Live with Walkman</b>. It was a great phone in that time!
+    \nIt has an additional button that let you launch the Walkman app immediately when you press it.
+    \nIn the past, many Android phones have some unique design on their own device.
+    \nThat's a great era of smartphone! I still want to see these happen again in the future.
+    \n\nNow I'm graduated and looking for a job about Android Developer.
+    \nBut it isn't that easy because of the COVID-19 situation. I'm a little bit sad XD.
+    \n\n Anyway, Nice to meet you!</string>
+    <string name="info_icon">Info icon</string>
+</resources>
