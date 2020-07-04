@@ -6,47 +6,63 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import org.aboutme.codelab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    // Data-binding object
+    private lateinit var binding: ActivityMainBinding
+
+    // object of Myname's data class
+    private val myName: MyName = MyName("Pornpat Santibuppakul")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // connect the layout file with the Activity
-        setContentView(R.layout.activity_main)
+//        // connect the layout file with the Activity (default way)
+//        setContentView(R.layout.activity_main)
 
-        done_button.setOnClickListener {
-            addNickname(it)
-        }
+        // use setContentView() from DataBindingUtil instead (data-binding)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        nickname_text.setOnClickListener {
-            updateNickname(it)
+        // binding data
+        binding.apply {
+            myName = this@MainActivity.myName
+
+            // set on click listener
+            doneButton.setOnClickListener { addNickname(it) }
+            nicknameText.setOnClickListener { updateNickname(it) }
         }
     }
 
     // Helper method
     private fun addNickname(view: View) {
-        if (nickname_text.text.isBlank()) {
-            Toast.makeText(this, "Enter your nickname first!", Toast.LENGTH_SHORT).show()
-        } else {
-            nickname_text.apply {
-                text = nickname_edit.text
-                visibility = View.VISIBLE
-            }.also {
-                nickname_edit.visibility = View.GONE
-                done_button.visibility = View.GONE
-            }
+        binding.apply {
+            if (nickname_edit.text.isBlank()) {
+                Toast.makeText(this@MainActivity, "Enter your nickname first!",
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                myName?.nickname = nicknameEdit.text.toString()
 
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+                nicknameEdit.visibility = View.GONE
+                doneButton.visibility = View.GONE
+                nicknameText.visibility = View.VISIBLE
+
+                // invalidate all binding expressions so that they are recreated with the correct data
+                invalidateAll()
+
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            }
         }
     }
 
     private fun updateNickname(view: View) {
-        let {
-            nickname_edit.visibility = View.VISIBLE
-            done_button.visibility = View.VISIBLE
+        binding.apply {
+            nicknameEdit.visibility = View.VISIBLE
+            doneButton.visibility = View.VISIBLE
         }.also {
             view.visibility = View.GONE
         }
